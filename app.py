@@ -3,7 +3,7 @@ import tensorflow as tf
 import numpy as np
 from PIL import Image
 from gtts import gTTS
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 from io import BytesIO
 from tensorflow.keras.applications.efficientnet import preprocess_input
 
@@ -96,7 +96,6 @@ def load_model():
     return tf.keras.models.load_model("EfficientNet_plant_disease_model.keras")
 
 model = load_model()
-translator = Translator()
 
 # ============================================================
 # LANGUAGE OPTIONS & TRANSLATIONS
@@ -313,6 +312,17 @@ def predict_disease(image):
         return "Unknown", 0.0
 
 # ============================================================
+# TRANSLATION HELPER (uses deep-translator)
+# ============================================================
+def translate_text(text, target_lang):
+    try:
+        # deep-translator expects target language code (e.g., 'hi', 'mr', etc.)
+        return GoogleTranslator(source='auto', target=target_lang).translate(text)
+    except Exception:
+        # if translation fails for any reason, return original English text
+        return text
+
+# ============================================================
 # AUDIO GENERATION
 # ============================================================
 def generate_audio(text, lang="en"):
@@ -430,15 +440,15 @@ if st.session_state.page == 'Home':
                 english_suggestion = suggestions_dict.get(predicted_class, suggestions_dict["Default"])
                 
                 try:
-                    translated_text = translator.translate(english_suggestion, src="en", dest=target_lang).text
+                    translated_text = translate_text(english_suggestion, target_lang)
                 except:
                     translated_text = t['translation_error']
 
                 # Translate disease name and label into selected language
                 try:
-                    translated_disease_text = translator.translate(
-                        f"Disease Detected: {predicted_class}", src="en", dest=target_lang
-                    ).text
+                    translated_disease_text = translate_text(
+                        f"Disease Detected: {predicted_class}", target_lang
+                    )
                 except:
                     translated_disease_text = f"Disease Detected: {predicted_class}"
 
@@ -540,7 +550,7 @@ elif st.session_state.page == 'About Us':
         ### वैशिष्ट्ये
         - **तत्काळ शोध** - सेकंदांत परिणाम
         - **बहुभाषिक समर्थन** - 10 भाषा उपलब्ध
-        - **मोबाइल मैत्रीपूर्ण** - सर्व उपकरणांवर कार्य करते
+        - **मोबाइल मैत्रीfreundlich** - सर्व उपकरणांवर कार्य करते
         - **तज्ञ सूचना** - शेतकरी-अनुकूल सल्ला
         """)
 
