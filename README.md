@@ -1,0 +1,1 @@
+# Intelligent-System-for-Crop-Disease-Identification-and-Solution-Recommendation
