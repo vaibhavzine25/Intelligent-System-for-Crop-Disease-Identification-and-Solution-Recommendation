@@ -123,7 +123,7 @@ detection_languages = {
 # Translation dictionary
 translations = {
     'english': {
-        'title': 'Gurukrupa Krushiseva Kendra',
+        'title': 'Guruprasad Krushiseva Kendra',
         'subtitle': 'Upload or capture a plant image to detect disease and receive treatment suggestions.',
         'ui_language': 'UI Language / यूआय भाषा:',
         'detection_language': 'Detection & Audio Language:',
@@ -157,7 +157,7 @@ translations = {
         'translation_error': 'Translation unavailable. Please read English suggestion below.'
     },
     'marathi': {
-        'title': 'गुरुकृपा कृषि सेवा केंद्र',
+        'title': 'गुरुप्रसाद कृषि सेवा केंद्र',
         'subtitle': 'रोग शोधण्यासाठी आणि उपचार सूचना मिळविण्यासाठी वनस्पतीची प्रतिमा अपलोड करा किंवा कॅप्चर करा.',
         'ui_language': 'यूआय भाषा / UI Language:',
         'detection_language': 'निदान आणि ऑडिओ भाषा:',
@@ -556,7 +556,7 @@ elif st.session_state.page == 'About Us':
 
 elif st.session_state.page == 'Contact':
     if st.session_state.language == 'english':
-        st.markdown("# Contact Gurukrupa Krushi Seva Kendra")
+        st.markdown("# Contact Guruprasad Krushi Seva Kendra")
         st.markdown("""
         ### Office Information
         **Name:** Gurukrupa Krushi Seva Kendra  
@@ -583,7 +583,7 @@ elif st.session_state.page == 'Contact':
         st.markdown("<h1 style='font-size: 1.8rem; line-height: 1.4; text-align: center; color: #1b4332; padding: 10px; margin-bottom: 20px; word-spacing: 2px;'>गुरुकृपा कृषि सेवा केंद्र संपर्क</h1>", unsafe_allow_html=True)
         st.markdown("""
         ### कार्यालय माहिती
-        **नाव:** गुरुकृपा कृषि सेवा केंद्र  
+        **नाव:** गुरुप्रसाद कृषि सेवा केंद्र  
         **पत्ता:** धोत्रेवाडी, सांगली, महाराष्ट्र, भारत  
         **फोन:** +91 7620450915
         
@@ -602,3 +602,4 @@ elif st.session_state.page == 'Contact':
         कोणत्याही प्रश्न, तांत्रिक सहाय्य किंवा अभिप्रायासाठी, कृपया वरील माहिती वापरून आमच्याशी संपर्क साधा.
         आम्ही शेतकऱ्यांना सर्वोत्तम कृषी तंत्रज्ञान समाधान देण्यासाठी वचनबद्ध आहोत.
         """)
+
