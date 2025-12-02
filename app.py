@@ -11,7 +11,7 @@ from tensorflow.keras.applications.efficientnet import preprocess_input
 # CONFIGURATION
 # ============================================================
 st.set_page_config(
-    page_title="Gurukrupa Krushiseva Kendra",
+    page_title="Guruprasad Krushiseva Kendra",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -341,8 +341,8 @@ with st.sidebar:
     # Logo and Title
     st.markdown("""
     <div style='text-align: center; padding: 10px; background: linear-gradient(45deg, #4CAF50, #45a049); border-radius: 10px; margin-bottom: 20px;'>
-        <h3 style='color: white; margin: 0;'>गुरुकृपा कृषि सेवा केंद्र</h3>
-        <p style='color: white; margin: 5px 0 0 0; font-size: 0.9em;'>Gurukrupa Krushi Seva Kendra</p>
+        <h3 style='color: white; margin: 0;'>गुरुप्रसाद कृषि सेवा केंद्र</h3>
+        <p style='color: white; margin: 5px 0 0 0; font-size: 0.9em;'>Guruprasad Krushi Seva Kendra</p>
     </div>
     """, unsafe_allow_html=True)
     
@@ -477,9 +477,9 @@ if st.session_state.page == 'Home':
 
 elif st.session_state.page == 'About Us':
     if st.session_state.language == 'english':
-        st.markdown("# Gurukrupa Krushi Seva Kendra")
+        st.markdown("# Guruprasad Krushi Seva Kendra")
         st.markdown("""
-        **Gurukrupa Krushi Seva Kendra** is an AI-powered agriculture support system that helps farmers detect crop diseases early using image recognition.  
+        **Guruprasad Krushi Seva Kendra** is an AI-powered agriculture support system that helps farmers detect crop diseases early using image recognition.  
         It provides instant, multilingual plant health diagnosis and simple treatment suggestions to help farmers make better decisions.
 
         **Mission:** Helping farmers detect plant diseases early and get effective treatments.  
@@ -518,7 +518,7 @@ elif st.session_state.page == 'About Us':
         st.markdown("<div style='margin-top: 40px;'></div>", unsafe_allow_html=True)
         st.markdown("<h1 style='font-size: 1.8rem; line-height: 1.4; text-align: center; color: #1b4332; padding: 10px; margin-bottom: 20px; word-spacing: 2px;'>गुरुकृपा कृषि सेवा केंद्र</h1>", unsafe_allow_html=True)
         st.markdown("""
-        **गुरुकृपा कृषि सेवा केंद्र** हे एक AI-आधारित कृषी सहाय्य प्रणाली आहे जी शेतकऱ्यांना प्रतिमा ओळख वापरून पिकांच्या रोगांची लवकर ओळख करण्यात मदत करते.  
+        **गुरुप्रसाद कृषि सेवा केंद्र** हे एक AI-आधारित कृषी सहाय्य प्रणाली आहे जी शेतकऱ्यांना प्रतिमा ओळख वापरून पिकांच्या रोगांची लवकर ओळख करण्यात मदत करते.  
         हे शेतकऱ्यांना चांगले निर्णय घेण्यास मदत करण्यासाठी तत्काळ, बहुभाषिक वनस्पती आरोग्य निदान आणि सोपे उपचार सूचना प्रदान करते.
 
         **ध्येय:** शेतकऱ्यांना वनस्पतींच्या रोगांची लवकर ओळख करण्यात आणि प्रभावी उपचार मिळविण्यात मदत करणे.  
@@ -559,7 +559,7 @@ elif st.session_state.page == 'Contact':
         st.markdown("# Contact Guruprasad Krushi Seva Kendra")
         st.markdown("""
         ### Office Information
-        **Name:** Gurukrupa Krushi Seva Kendra  
+        **Name:** Guruprasad Krushi Seva Kendra  
         **Address:** Dhotrewadi, Sangli, Maharashtra, India  
         **Phone:** +91 7620450915
         
@@ -602,4 +602,5 @@ elif st.session_state.page == 'Contact':
         कोणत्याही प्रश्न, तांत्रिक सहाय्य किंवा अभिप्रायासाठी, कृपया वरील माहिती वापरून आमच्याशी संपर्क साधा.
         आम्ही शेतकऱ्यांना सर्वोत्तम कृषी तंत्रज्ञान समाधान देण्यासाठी वचनबद्ध आहोत.
         """)
+
 
