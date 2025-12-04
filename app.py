@@ -104,12 +104,9 @@ st.markdown(
 # ============================================================
 
 @st.cache_resource
-def load_model():
+def load_disease_model():
     model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras")
-    import keras
     return keras.models.load_model(model_path)
-
-
 
 @st.cache_resource
 def load_non_plant_model():
@@ -195,7 +192,7 @@ translations = {
     "marathi": {
         "title": "गुरुप्रसाद कृषि सेवा केंद्र",
         "subtitle": "रोग शोधण्यासाठी आणि उपचार सूचना मिळविण्यासाठी वनस्पतीची प्रतिमा अपलोड करा किंवा कॅप्चर करा.",
-        "ui_language": "यूआय भाषा / UI Language:",
+        "ui_language": "यूआई भाषा / UI Language:",
         "detection_language": "निदान आणि ऑडिओ भाषा:",
         "navigation": "नेव्हिगेशन",
         "select_page": "पृष्ठ निवडा:",
@@ -751,4 +748,3 @@ elif st.session_state.page == "Contact":
         आम्ही शेतकऱ्यांना सर्वोत्तम कृषी तंत्रज्ञान समाधान देण्यासाठी वचनबद्ध आहोत.
         """
         )
-
