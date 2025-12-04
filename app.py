@@ -96,8 +96,8 @@ def load_model():
     import keras
     return keras.models.load_model("plant_model_keras3")
 
-
 model = load_model()
+
 
 # ============================================================
 # LANGUAGE OPTIONS & TRANSLATIONS
@@ -604,6 +604,7 @@ elif st.session_state.page == 'Contact':
         कोणत्याही प्रश्न, तांत्रिक सहाय्य किंवा अभिप्रायासाठी, कृपया वरील माहिती वापरून आमच्याशी संपर्क साधा.
         आम्ही शेतकऱ्यांना सर्वोत्तम कृषी तंत्रज्ञान समाधान देण्यासाठी वचनबद्ध आहोत.
         """)
+
 
 
 
