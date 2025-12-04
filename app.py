@@ -108,28 +108,7 @@ def load_disease_model():
     model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras")
     return keras.models.load_model(model_path)
 
-@st.cache_resource
-def load_non_plant_model():
-    """
-    Lightweight MobileNetV2 from ImageNet to detect
-    if image looks like a plant/leaf or something else (person, car, etc).
-
-    If anything fails (e.g., no internet to download weights),
-    returns None and app will continue without this filter.
-    """
-    try:
-        model = MobileNetV2(weights="imagenet")
-        return model
-    except Exception:
-        st.warning(
-            "Non-plant image filter (MobileNetV2) could not be loaded. "
-            "Continuing without non-plant detection."
-        )
-        return None
-
-
 disease_model = load_disease_model()
-non_plant_model = load_non_plant_model()
 
 # ============================================================
 # LANGUAGE OPTIONS & TRANSLATIONS
@@ -239,6 +218,7 @@ class_names = [
     "Grape___Esca_(Black_Measles)",
     "Grape___Leaf_blight_(Isariopsis_Leaf_Spot)",
     "Grape___healthy",
+    "Non_Plant",
     "Orange___Haunglongbing_(Citrus_greening)",
     "Peach___Bacterial_spot",
     "Peach___healthy",
@@ -268,6 +248,8 @@ class_names = [
 # ============================================================
 
 suggestions_dict = {
+    # Non-Plant
+    "Non_Plant": "This image does not appear to be a plant leaf. Please upload a clear image of a plant leaf for disease detection.",
     # Corn (Maize)
     "Corn_(maize)___Cercospora_leaf_spot Gray_leaf_spot": "Practice crop rotation and tillage to reduce fungus residue. Consider resistant hybrids. Apply appropriate fungicides if disease is severe.",
     "Corn_(maize)___Common_rust_": "Plant resistant hybrids if available. Fungicide application is most effective when applied early, as rust spots first appear.",
@@ -326,66 +308,7 @@ def preprocess_image_for_disease(image: Image.Image) -> np.ndarray:
     return img_array
 
 
-def preprocess_image_for_non_plant(image: Image.Image) -> np.ndarray:
-    """Preprocess image for MobileNetV2 non-plant detection."""
-    img = image.convert("RGB").resize((224, 224))
-    img_array = tf.keras.preprocessing.image.img_to_array(img)
-    img_array = np.expand_dims(img_array, axis=0)
-    img_array = mobilenet_preprocess(img_array)
-    return img_array
 
-
-# ============================================================
-# NON-PLANT DETECTION
-# ============================================================
-
-
-def is_probably_plant(image: Image.Image):
-    """
-    Use ImageNet MobileNetV2 to check if the image is likely a plant/leaf.
-    Returns (is_plant: bool, info: dict or None)
-    info = {"imagenet_label": str, "confidence": float}
-    """
-    if non_plant_model is None:
-        return True, None  # filter unavailable
-
-    try:
-        arr = preprocess_image_for_non_plant(image)
-        preds = non_plant_model.predict(arr)
-        decoded = decode_predictions(preds, top=1)[0][0]  # (id, label, prob)
-        label = decoded[1]
-        prob = float(decoded[2])
-
-        plant_keywords = [
-            "corn",
-            "maize",
-            "leaf",
-            "leaves",
-            "plant",
-            "tree",
-            "flower",
-            "fruit",
-            "vegetable",
-            "cabbage",
-            "potato",
-            "tomato",
-            "pepper",
-            "squash",
-            "pumpkin",
-            "strawberry",
-            "orange",
-            "lemon",
-            "mushroom",
-            "fungus",
-        ]
-
-        label_lower = label.lower()
-        is_plant = any(k in label_lower for k in plant_keywords)
-
-        return is_plant, {"imagenet_label": label, "confidence": prob}
-    except Exception:
-        # If anything goes wrong, don't block user
-        return True, None
 
 
 # ============================================================
@@ -547,19 +470,14 @@ if st.session_state.page == "Home":
 
         if st.button(t["diagnose"]):
             with st.spinner(t["analyzing"]):
-                # 1) Non-plant check
-                is_plant, np_info = is_probably_plant(image)
-                if not is_plant:
-                    st.error(t["non_plant_error"])
-                    if np_info is not None:
-                        st.caption(
-                            f"(ImageNet guess: {np_info['imagenet_label']} "
-                            f"- {np_info['confidence'] * 100:.1f}% confidence)"
-                        )
-                    st.stop()
-
-                # 2) Disease prediction
+                # Disease prediction
                 predicted_class, confidence = predict_disease(image)
+                
+                # Check if it's non-plant
+                if predicted_class == "Non_Plant":
+                    st.error(t["non_plant_error"])
+                    st.stop()
+                
                 english_suggestion = suggestions_dict.get(
                     predicted_class, suggestions_dict["Default"]
                 )
