@@ -89,16 +89,20 @@ st.markdown(
 )
 
 # ============================================================
-# LOAD MODEL (Fixed for Streamlit Cloud)
+# LOAD MODEL (Compatible with Keras 3.3.2 + TF 2.17)
 # ============================================================
 import os
+import keras
+import streamlit as st
 
 @st.cache_resource
 def load_model():
-    model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease.keras")
-    return tf.keras.models.load_model(model_path)
+    # Always load the FIXED model
+    model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras")
+    return keras.models.load_model(model_path)
 
 model = load_model()
+
 
 
 # ============================================================
