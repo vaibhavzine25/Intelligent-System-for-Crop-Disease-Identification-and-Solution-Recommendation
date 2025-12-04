@@ -103,18 +103,12 @@ st.markdown(
 # LOAD MODELS (Disease model + Non-plant filter)
 # ============================================================
 
-
 @st.cache_resource
-def load_disease_model():
-    """
-    Load the fixed Keras 3-compatible disease model.
-    File MUST be placed beside app.py as:
-    EfficientNetB0_plant_disease_FIXED.keras
-    """
-    model_path = os.path.join(
-        os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras"
-    )
-    return keras.models.load_model(model_path, compile=False)
+def load_model():
+    model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras")
+    import keras
+    return keras.models.load_model(model_path)
+
 
 
 @st.cache_resource
@@ -757,3 +751,4 @@ elif st.session_state.page == "Contact":
         आम्ही शेतकऱ्यांना सर्वोत्तम कृषी तंत्रज्ञान समाधान देण्यासाठी वचनबद्ध आहोत.
         """
         )
+
