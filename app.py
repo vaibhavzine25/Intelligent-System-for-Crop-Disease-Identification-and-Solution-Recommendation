@@ -8,14 +8,8 @@ from PIL import Image
 from gtts import gTTS
 from deep_translator import GoogleTranslator
 
-import keras
 from tensorflow.keras.applications.efficientnet import (
     preprocess_input as efficientnet_preprocess,
-)
-from tensorflow.keras.applications.mobilenet_v2 import (
-    MobileNetV2,
-    preprocess_input as mobilenet_preprocess,
-    decode_predictions,
 )
 
 # ============================================================
@@ -100,15 +94,15 @@ st.markdown(
 )
 
 # ============================================================
-# LOAD MODELS (Disease model + Non-plant filter)
+# LOAD MODEL
 # ============================================================
 
 @st.cache_resource
-def load_disease_model():
-    model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease_FIXED.keras")
-    return keras.models.load_model(model_path)
+def load_model():
+    model_path = os.path.join(os.path.dirname(__file__), "EfficientNetB0_plant_disease.keras")
+    return tf.keras.models.load_model(model_path)
 
-disease_model = load_disease_model()
+model = load_model()
 
 # ============================================================
 # LANGUAGE OPTIONS & TRANSLATIONS
@@ -298,7 +292,6 @@ suggestions_dict = {
 # IMAGE PREPROCESSING
 # ============================================================
 
-
 def preprocess_image_for_disease(image: Image.Image) -> np.ndarray:
     """Preprocess image for EfficientNetB0 disease model."""
     img = image.convert("RGB").resize((128, 128))
@@ -307,19 +300,14 @@ def preprocess_image_for_disease(image: Image.Image) -> np.ndarray:
     img_array = efficientnet_preprocess(img_array)
     return img_array
 
-
-
-
-
 # ============================================================
 # PREDICTION FUNCTION
 # ============================================================
 
-
 def predict_disease(image: Image.Image):
     try:
         img_array = preprocess_image_for_disease(image)
-        predictions = disease_model.predict(img_array)
+        predictions = model.predict(img_array)
         predicted_index = int(np.argmax(predictions[0]))
         confidence = float(np.max(predictions[0]))
         predicted_class = class_names[predicted_index]
@@ -328,11 +316,9 @@ def predict_disease(image: Image.Image):
         st.error(f"Prediction failed: {str(e)}")
         return "Unknown", 0.0
 
-
 # ============================================================
 # TRANSLATION & AUDIO HELPERS
 # ============================================================
-
 
 def translate_text(text: str, target_lang: str) -> str:
     try:
@@ -340,14 +326,12 @@ def translate_text(text: str, target_lang: str) -> str:
     except Exception:
         return text
 
-
 def generate_audio(text: str, lang: str = "en") -> BytesIO:
     tts = gTTS(text=text, lang=lang)
     audio_fp = BytesIO()
     tts.write_to_fp(audio_fp)
     audio_fp.seek(0)
     return audio_fp
-
 
 # ============================================================
 # SIDEBAR: NAVIGATION & SETTINGS
@@ -501,7 +485,6 @@ if st.session_state.page == "Home":
                     f"**{t['disease_detected_lang']} ({detection_lang_option}):** "
                     f"{translated_disease_text}"
                 )
-                # st.caption(f"Confidence: {confidence * 100:.2f}%")
 
                 st.markdown(f"### {t['suggestion_en']}")
                 st.write(english_suggestion)
