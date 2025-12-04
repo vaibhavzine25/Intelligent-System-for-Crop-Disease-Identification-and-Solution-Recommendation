@@ -93,7 +93,7 @@ st.markdown(
 # ============================================================
 @st.cache_resource
 def load_model():
-    return tf.keras.models.load_model("EfficientNetB0_plant_diseasel.keras")
+    return tf.keras.models.load_model("EfficientNetB0_plant_disease.keras")
 
 model = load_model()
 
